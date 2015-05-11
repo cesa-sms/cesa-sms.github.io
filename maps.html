@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>CESA</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
+    <link href="css/bootstrap_dark.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="icon" 
+      type="image/png" 
+      href="./images/favicon.png" />
+<!--    <link href="cesa.css" rel="stylesheet" >-->
+        <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    
+   
+    
+    
+
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+  <script src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    
+	<script>  Parse.initialize("6Newz3ChknhFDA0IRvtFVBEV6wkHEJtGjagAKfgY", "mpPOPAdgD2dhoqOuCu6zw3qwipx5wxFL9S0aGNzb");</script>
+</head>
+<body onload="getLocation();">
+    
+
+    <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><img src="images/logo_wt.png" width="100px"/></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    
+      <ul class="nav navbar-nav navbar-right">
+          <li><a id="name"> hey </a></li>
+        <li><input type="button" class="navbar-btn btn-info btn-sm" value="Add Details" data-toggle="modal" data-target="#basicModal">&nbsp;</li>
+        <li><input type="button" onclick="logout()" class="navbar-btn btn-danger btn-sm"  value="Logout"></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+	
+	<div class="container">
+		
+    	<div class="row">
+			<div class="col-md-12">
+				<div class="panel">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-lg-12">
+<!--
+                                <div class="col-md-6 col-md-offset-3 text-center">
+								<h1 class="text-center">CESA</h1>
+							</div>
+-->
+								<p id="demo" class="text-center">Locating your position.</p>
+                                    <center><div id="mapholder"></div>
+                                        <br>
+                                        <p id="amb"></p>
+                                      
+                                        <button type="button" onclick="WebSocketTest()" value="Try it" class="btn btn-danger btn-lg">HELP!!!</button>
+                                        
+<!--                                        <a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#basicModal">Click to open Modal</a>-->
+                                </center>
+						
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+
+
+
+
+
+
+    
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Medical Details</h4>
+      </div>
+      <div class="modal-body">
+        <form id="register-form" action="#" method="post" role="form"  onsubmit="return sign()">
+<div class="form-group">
+<input type="text" name="bloodgroup"  class="form-control" placeholder="Blood Group">
+            </div>
+            <div class="form-group">
+
+<input type="text" name="age"  class="form-control" placeholder="Age:">
+         </div>
+             <div class="checkbox">
+      <label><input type="checkbox" name="sex" value="male" >Male</label>
+      <label><input type="checkbox" name="sex" value="female" >Female</label>
+    </div>
+             
+            
+<!--
+ <input type="radio" name="sex" value="male" checked tabindex="2" class="form-control">Male
+<input type="radio" name="sex" value="female" tabindex="2" class="form-control">Female
+</div>
+-->
+            <div class="form-group">
+<input type="text" name="emergency"   class="form-control" placeholder="Emergency Contact:" required>
+                 </div>
+            <div class="form-group">
+                <label>Allergies:</label></div><div class="form-group">
+                <input type="text" name="allergies1"  class="form-control" placeholder="1:"></div><div class="form-group">
+            <input type="text" name="allergies2"  class="form-control" placeholder="2:"></div><div class="form-group">
+          <input type="text" name="allergies3"  class="form-control" placeholder="3:"></div>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+    
+ <script type="text/javascript">
+
+var x = document.getElementById("demo");
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+        //ambloc();
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    lat = position.coords.latitude;
+    latp = position.coords.latitude;
+    lon = position.coords.longitude;
+    lonp = position.coords.longitude;
+    latlon = new google.maps.LatLng(lat, lon)
+    mapholder = document.getElementById('mapholder')
+    mapholder.style.height = '400px';
+    mapholder.style.width = screen.width;
+    x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;	
+    var myOptions = {
+    center:latlon,zoom:13,
+    mapTypeId:google.maps.MapTypeId.ROADMAP,
+    mapTypeControl:false,
+    navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+    }
+    var bounds = new google.maps.LatLngBounds();
+    var infoWindow = new google.maps.InfoWindow(), marker, i;
+    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    var map = new google.maps.Map(document.getElementById("mapholder"), myOptions);
+    var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
+         var vehicle= Parse.Object.extend("Vehiclelatlong");
+         var query = new Parse.Query(vehicle);
+         query.exists("Latlong");
+         query.find({
+  success: function(results) {
+    //alert("Successfully retrieved " + results.length + " scores.");
+    // Do something with the returned Parse.Object values
+    for (var i = 0; i < results.length; i++) { 
+      var object = results[i];
+      //alert(object.id + ' - ');
+      var lat=object.get("Latlong")._latitude;
+      var lon=object.get("Latlong")._longitude;
+        
+        
+        var url = 'http://maps.googleapis.com/maps/api/distancematrix/json?origins='+latp+','+lonp+'&destinations='+lat+','+lon+'&sensor=false&mode=driving';
+        console.log(url);
+      //  getJSONP(url, function(data){
+    //console.log(data);
+//});  
+    //console.log(makeCorsRequest(url));
+       // alert(makeCorsRequest(url));
+//        var obj = JSON.parse(makeCorsRequest(url));
+//        alert(obj.rows.elements.duration.value);
+                             
+    //$.getJSON(), function(data){
+       // console.log(data);
+    //});
+      
+        var position = new google.maps.LatLng(lat,lon);
+         //var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+        bounds.extend(position);
+        marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: object.get("nodename"),
+            icon: './images/amb.png'
+        });
+        
+        // Allow each marker to have an info window    
+//        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+//            return function() {
+//                infoWindow.setContent('<p style="color : black;">'+ object.get("nodename")+'</p>');
+//                infoWindow.open(map, marker);
+//            }
+//        })(marker, i));
+
+        // Automatically center the map fitting all markers on the screen
+        map.fitBounds(bounds);
+    }
+      
+      var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+        this.setZoom(13);
+        google.maps.event.removeListener(boundsListener);
+    });
+//        console.debug(a);
+//        console.debug(a._latitude)
+//        a._latitude;
+//        a._latitude
+//    console.debug(object);
+//        console.debug(object["attributes"]["Latlong"]["_lattitude"])
+  },
+  error: function(error) {
+    alert("Error: " + error.code + " " + error.message);
+  }
+});
+	google.maps.event.addDomListener(window, "resize", function() {
+    var center = map.getCenter();
+    google.maps.event.trigger(map, "resize");
+    map.setCenter(center); 
+     
+});
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+    }
+}
+     
+     
+function ambloc()
+     {
+        //lat = position.coords.latitude;
+    //lon = position.coords.longitude;
+           var myOptions = {
+    center:latlon,zoom:14,
+    mapTypeId:google.maps.MapTypeId.ROADMAP,
+    mapTypeControl:false,
+    navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+    }
+        var map = new google.maps.Map(document.getElementById("mapholder"), myOptions);
+         
+         var vehicle= Parse.Object.extend("Vehiclelatlong");
+         var query = new Parse.Query(vehicle);
+         query.exists("Latlong");
+         query.find({
+  success: function(results) {
+    //alert("Successfully retrieved " + results.length + " scores.");
+    // Do something with the returned Parse.Object values
+    for (var i = 0; i < results.length; i++) { 
+      var object = results[i];
+      //alert(object.id + ' - ');
+      var lat=object.get("Latlong")._latitude;
+      var lon=object.get("Latlong")._longitude;
+        
+      
+        var myLatlng = new google.maps.LatLng(lat,lon);
+        var marker = new google.maps.Marker({ position: myLatlng, map: map, title: object.get("nodename") });
+         google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+                infoWindow.setContent(object.get("nodename"));
+                infoWindow.open(map, marker);
+            }
+        })(marker, i));
+//        console.debug(a);
+//        console.debug(a._latitude)
+//        a._latitude;
+//        a._latitude
+//    console.debug(object);
+//        console.debug(object["attributes"]["Latlong"]["_lattitude"])
+    }
+  },
+  error: function(error) {
+    alert("Error: " + error.code + " " + error.message);
+  }
+});
+         
+//        query.find({
+//    success: function(results) {
+//             for(var i=0;i< results.length ;i++)
+//             {
+//                var object=results[i];
+//                document.getElementById("amb").innerHTML+=object.get("Latlong")+" ";
+//                 
+//             }
+//     results is an array of Parse.Object.
+//    },
+//
+//    error: function(error) {
+//    // error is an instance of Parse.Error.
+//        alert("fail");
+//    }
+//        });
+        // api distance = https://maps.googleapis.com/maps/api/distancematrix/output?parameters  origins=Bobcaygeon+ON|41.43206,-81.38992  destinations=Darling+Harbour+NSW+Australia|24+Sussex+Drive+Ottawa+ON|Capitola+CA
+       
+     }
+function ambulance()
+     {
+       lat = position.coords.latitude;
+    lon = position.coords.longitude;   
+     }
+</script>
+    
+    
+    <script>
+    function createCORSRequest(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ("withCredentials" in xhr) {
+    // XHR for Chrome/Firefox/Opera/Safari.
+    xhr.open(method, url, true);
+  } else if (typeof XDomainRequest != "undefined") {
+    // XDomainRequest for IE.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+  } else {
+    // CORS not supported.
+    xhr = null;
+  }
+  return xhr;
+}
+
+// Helper method to parse the title tag from the response.
+function getTitle(text) {
+  return text.match('<title>(.*)?</title>')[1];
+}
+
+// Make the actual CORS request.
+function makeCorsRequest(url) {
+  // All HTML5 Rocks properties support CORS.
+  //var url = 'http://updates.html5rocks.com';
+
+  var xhr = createCORSRequest('GET', url);
+    alert(xhr);
+  if (!xhr) {
+    alert('CORS not supported');
+    return;
+  }
+    var text="";
+  // Response handlers.
+  xhr.onload = function() {
+      return xhr.responseText;
+    var text = xhr.responseText;
+    var title = getTitle(text);
+    alert('Response from CORS request to ' + url + ': ' + title);
+      
+  };
+
+  xhr.onerror = function() {
+    alert('Woops, there was an error making the request.');
+  };
+
+  xhr.send();
+   return text;
+}
+    
+    
+    
+    </script>
+    <script>
+        
+      
+     var currentUser = Parse.User.current();  // this will now be null
+             if (currentUser) {
+                var xyz = JSON.parse( localStorage.getItem( localStorage.key(0) ) );
+               document.getElementById("name").innerHTML=xyz["username"];
+            } else {
+                window.location.assign("index.html");
+            }
+        
+    function logout()
+        {
+            Parse.User.logOut();
+            var currentUser = Parse.User.current();  // this will now be null
+             if (currentUser) {
+               
+            } else {
+                window.location.assign("index.html");
+            }
+        }
+    
+    </script>
+    
+    
+     <script type="text/javascript">
+         function WebSocketTest()
+         {
+            if ("WebSocket" in window)
+            {
+               alert("WebSocket is supported by your Browser!");
+               // Let us open a web socket
+               var ws = new WebSocket("ws://192.168.2.11:9000");
+				
+               ws.onopen = function()
+               {
+                  // Web Socket is connected, send data using send()
+                  ws.send("id: kdflklf");
+                  alert("Message is sent...");
+               };
+				
+               ws.onmessage = function (evt) 
+               { 
+                  var received_msg = evt.data;
+                  alert("Message is received...");
+               };
+				
+               ws.onclose = function()
+               { 
+                  // websocket is closed.
+                  alert("Connection is closed..."); 
+               };
+				
+            }
+            else
+				
+            {
+               // The browser doesn't support WebSocket
+               alert("WebSocket NOT supported by your Browser!");
+            }
+         }
+      </script>
+    <script>
+    function getJSONP(url, success) {
+
+    var ud = '_' + +new Date,
+        script = document.createElement('script'),
+        head = document.getElementsByTagName('head')[0] 
+               || document.documentElement;
+
+    window[ud] = function(data) {
+        head.removeChild(script);
+        success && success(data);
+    };
+
+    script.src = url.replace('callback=?', 'callback=' + ud);
+    head.appendChild(script);
+
+}
+
+//getJSONP('http://soundcloud.com/oembed?url=http%3A//soundcloud.com/forss/flickermood&format=js&callback=?', function(data){
+//    console.log(data);
+//});  
+    
+    </script>
+		
+    </body>
+    
+    
+    
+     
+</html>
