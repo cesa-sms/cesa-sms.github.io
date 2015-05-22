@@ -418,7 +418,7 @@ function makeCorsRequest(url) {
             {
                alert("WebSocket is supported by your Browser!");
                // Let us open a web socket
-               var ws = new WebSocket("ws://127.0.0.1:9000");
+               var ws = new WebSocket("ws://0.0.0.0:9000");
 				
                ws.onopen = function()
                {
