@@ -208,8 +208,10 @@ function showPosition(position) {
                 {
                     durt=durtt;
                     dist=distt;
-                    id=object.id;
-                    alert("happening1");
+                    localStorage.setItem("vehdur", durt);
+                    localStorage.setItem("vehdist", dist);
+                    localStorage.setItem("vehid", object.id);
+                    alert(durt);
                 }
             }
         } );
@@ -249,10 +251,7 @@ function showPosition(position) {
         map.fitBounds(bounds);
     }
       
-      localStorage.setItem("vehdur", durt);
-      localStorage.setItem("vehdist", dist);
-      localStorage.setItem("vehid", id);
-       $( '#travel_data' ).html( 'Estimated travel time: ' + durt+ ' (' + dist + ')' );
+       $( '#travel_data' ).html( 'Estimated travel time: ' +localStorage.getItem("vehdur")+ 'mins (' + localStorage.getItem("vehdist") + 'Kms )' );
 
       var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
         this.setZoom(13);
