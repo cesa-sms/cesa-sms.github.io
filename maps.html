@@ -142,8 +142,13 @@ function getLocation() {
 }
 
 function showPosition(position) {
+    dist=0
+    durt=0
+    distt=0
+    durtt=0
     distance='a';
     duration='a';
+    id='a';
     lat = position.coords.latitude;
     latp = position.coords.latitude;
     lon = position.coords.longitude;
@@ -193,8 +198,17 @@ function showPosition(position) {
                 var point = response.routes[ 0 ].legs[ 0 ];
                 
                 distance=point.distance.text;
+                distance=distance.split(" ");
+                distt=parseFloat(distance[0]);
                 duration=point.duration.text;
-                $( '#travel_data' ).html( 'Estimated travel time: ' + point.duration.text + ' (' + point.distance.text + ')' );
+                duration=duration.split(" ");
+                durtt=parseFloat(duration[0]);
+                if(durtt>=durt)
+                {
+                    durt=durtt;
+                    dist=distt;
+                    id=object.id;
+                }
             }
         } );
                 var url = 'http://maps.googleapis.com/maps/api/distancematrix/json?origins='+latp+','+lonp+'&destinations='+lat+','+lon+'&sensor=false&mode=driving';
@@ -233,6 +247,11 @@ function showPosition(position) {
         map.fitBounds(bounds);
     }
       
+      localStorage.setItem("vehdur", durt);
+      localStorage.setItem("vehdist", dist);
+      localStorage.setItem("vehid", id);
+       $( '#travel_data' ).html( 'Estimated travel time: ' + durt+ ' (' + dist + ')' );
+
       var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
         this.setZoom(13);
         google.maps.event.removeListener(boundsListener);
@@ -506,8 +525,10 @@ function addMedicalDetails()
                ws.onopen = function()
                {
                   // Web Socket is connected, send data using send()
-                   var xyz = JSON.parse( localStorage.getItem( localStorage.key(0) ) );
-                  ws.send(xyz["objectid"]);
+                   var perid = JSON.parse( localStorage.getItem( localStorage.key(0) ) );
+                   var vehid= localStorage.getItem("vehid");
+                  ws.send(perid["objectid"]+','+vehid)
+                   
                   alert("Message is sent...");
                };
 				
