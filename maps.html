@@ -183,9 +183,9 @@ function showPosition(position) {
         
         var url = 'http://maps.googleapis.com/maps/api/distancematrix/json?origins='+latp+','+lonp+'&destinations='+lat+','+lon+'&sensor=false&mode=driving';
         console.log(url);
-      //  getJSONP(url, function(data){
-    //console.log(data);
-//});  
+      getJSONP(url, function(data){
+    console.log(data);
+});  
     //console.log(makeCorsRequest(url));
        // alert(makeCorsRequest(url));
 //        var obj = JSON.parse(makeCorsRequest(url));
@@ -416,9 +416,9 @@ function makeCorsRequest(url) {
          {
             if ("WebSocket" in window)
             {
-               alert("WebSocket is supported by your Browser!");
+               alert("Calling Ambulance");
                // Let us open a web socket
-               var ws = new WebSocket("ws://0.0.0.0:9000");
+               var ws = new WebSocket("ws://localhost:9000");
 				
                ws.onopen = function()
                {
@@ -436,7 +436,7 @@ function makeCorsRequest(url) {
                ws.onclose = function()
                { 
                   // websocket is closed.
-                  alert("Connection is closed..."); 
+                  alert("Ambulance Arrived"); 
                };
 				
             }
