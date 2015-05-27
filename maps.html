@@ -98,33 +98,21 @@
       <div class="modal-body">
         <form id="register-form" action="#" method="post" role="form">
 <div class="form-group">
-<input type="text" name="bloodgroup"  class="form-control" placeholder="Blood Group">
+<input type="text" id="bloodgroup"  class="form-control" placeholder="Blood Group">
             </div>
             <div class="form-group">
 
-<input type="text" name="age"  class="form-control" placeholder="Age:">
+<input type="text" id="age"  class="form-control" placeholder="Age:">
          </div>
              <div class="form-group">
         <label>Gender: &nbsp;&nbsp;&nbsp;</label>
-      <label><input type="radio" name="sex" value="male" >Male</label>
-      <label><input type="radio" name="sex" value="female" >Female</label>
+      <label><input type="radio" id="gender" value="male" >Male</label>
+      <label><input type="radio" id="gender" value="female" >Female</label>
     </div>
-             
-            
-<!--
- <input type="radio" name="sex" value="male" checked tabindex="2" class="form-control">Male
-<input type="radio" name="sex" value="female" tabindex="2" class="form-control">Female
-</div>
--->
-<!--
-            <div class="form-group">
-                <input type="text" name="emergency"   class="form-control" placeholder="Emergency Contact:" required>
-                 </div>
--->
             <div class="form-group">
                 <label>Allergies:</label>
 <!--                <input type="text" name="allergies1"  class="form-control" placeholder="1:"></div><div class="form-group">-->
-            <textarea name="allergies" style="width:100%;height:50px;"></textarea>
+            <textarea id="allergies" style="width:100%;height:50px;"></textarea>
 <!--
             <input type="text" name="allergies2"  class="form-control" placeholder="2:"></div><div class="form-group">
           <input type="text" name="allergies3"  class="form-control" placeholder="3:"></div>
@@ -134,7 +122,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="addMedicalDetails()">Save changes</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addMedicalDetails()">Save changes</button>
 
       </div>
     </div>
@@ -390,7 +378,7 @@ function makeCorsRequest(url) {
    return text;
 }
         
-function sign()
+function addMedicalDetails()
 		{
 			bldgrp=document.getElementById("bloodgroup").value;
 			age=document.getElementById("age").value;
@@ -400,26 +388,58 @@ function sign()
             var uname=xyz["username"];
 			var Med = Parse.Object.extend("medicaldetails");
             var medDet = new Med();
+            var query = new Parse.Query(Med);
+            query.equalTo("uname",xyz["username"] );
+            query.find({
+              success: function(results) {
+                //alert("Successfully retrieved " + results.length + " scores.");
+                // Do something with the returned Parse.Object values
+                for (var i = 0; i < results.length; i++) { 
+                    var object = results[i];
+                    medDet.id=object.id 
+                    medDet.set("bloodgroup",bldgrp);
+                    medDet.set("age",age);
+                    medDet.set("gender", gender);
+                    medDet.set("allergies", allergies);
+                    medDet.set("uname", uname);
 
-            medDet.set("bloodgroup",bldgrp);
-            medDet.set("age",parseInt(age));
-            medDet.set("gender", gender);
-            medDet.set("allergies", allergies);
-            medDet.set("uname", uname);
-            
 
-            medDet.save(null, {
-              success: function(medDet) {
-                // Execute any logic that should take place after the object is saved.
-                alert('New object created with objectId: ' + medDet.id);
-              },
-              error: function(medDet, error) {
-                // Execute any logic that should take place if the save fails.
-                // error is a Parse.Error with an error code and message.
-                alert('Failed to create new object, with error code: ' + error.message);
+                    medDet.save(null, {
+                      success: function(medDet) {
+                        // Execute any logic that should take place after the object is saved.
+                        alert('Details Updated!');
+                      },
+                      error: function(medDet, error) {
+                        // Execute any logic that should take place if the save fails.
+                        // error is a Parse.Error with an error code and message.
+                        alert('Failed to Update, with error code: ' + error.message);
+                      }
+                    });
+                        }
+                      },
+              error: function(error) {
+                    medDet.set("bloodgroup",bldgrp);
+                    medDet.set("age",age);
+                    medDet.set("gender", gender);
+                    medDet.set("allergies", allergies);
+                    medDet.set("uname", uname);
+
+
+                    medDet.save(null, {
+                      success: function(medDet) {
+                        // Execute any logic that should take place after the object is saved.
+                        alert('Details Added!');
+                      },
+                      error: function(medDet, error) {
+                        // Execute any logic that should take place if the save fails.
+                        // error is a Parse.Error with an error code and message.
+                        alert('Failed to add Details, with error code: ' + error.message);
+                      }
+                    });
+                
               }
             });
-
+            
             
 			event.preventDefault();
 		}
@@ -466,7 +486,7 @@ function sign()
                {
                   // Web Socket is connected, send data using send()
                    var xyz = JSON.parse( localStorage.getItem( localStorage.key(0) ) );
-                  ws.send(xyz["username"]);
+                  ws.send(xyz["objectid"]);
                   alert("Message is sent...");
                };
 				
