@@ -528,7 +528,7 @@ function addMedicalDetails()
                   // Web Socket is connected, send data using send()
                    var perid = JSON.parse( localStorage.getItem( localStorage.key(0) ) );
                    var vehid= localStorage.getItem("vehid");
-                  ws.send(perid["objectId"]+','+vehid)
+                  ws.send(perid["username"]+','+perid["objectId"]+','+vehid)
                    
                   alert("Message is sent...");
                };
