@@ -211,7 +211,7 @@ function showPosition(position) {
                     localStorage.setItem("vehdur", durtt);
                     localStorage.setItem("vehdist", distt);
                     localStorage.setItem("vehid", object.id);
-                    alert(durt);
+                    //alert(durt);
                 }
             }
         } );
@@ -250,8 +250,8 @@ function showPosition(position) {
         // Automatically center the map fitting all markers on the screen
         map.fitBounds(bounds);
     }
-      
-       $( '#travel_data' ).html( 'Estimated travel time: ' +localStorage.getItem("vehdur")+ 'mins (' + localStorage.getItem("vehdist") + 'Kms )' );
+      setTimeout(function(){$( '#travel_data' ).html( 'Estimated travel time: ' +localStorage.getItem("vehdur")+ 'mins (' + localStorage.getItem("vehdist") + 'Kms )' );},3000);
+       
 
       var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
         this.setZoom(13);
