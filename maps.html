@@ -69,7 +69,7 @@
                                         <p id="amb"></p>
                                       
                                         <button type="button" onclick="WebSocketTest()" value="Try it" class="btn btn-danger btn-lg">HELP!!!</button>
-                                        
+                                        <p id="travel_data"></p>
 <!--                                        <a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#basicModal">Click to open Modal</a>-->
                                 </center>
 						
@@ -175,8 +175,24 @@ function showPosition(position) {
       var lat=object.get("Latlong")._latitude;
       var lon=object.get("Latlong")._longitude;
         
-        
-        var url = 'http://maps.googleapis.com/maps/api/distancematrix/json?origins='+latp+','+lonp+'&destinations='+lat+','+lon+'&sensor=false&mode=driving';
+        var origin = new google.maps.LatLng( location.latitude, location.longitude ); // using google.maps.LatLng class
+        var destination = lat', ' + lon; // using string
+
+        var directionsService = new google.maps.DirectionsService();
+        var request = {
+            origin: origin, // LatLng|string
+            destination: destination, // LatLng|string
+            travelMode: google.maps.DirectionsTravelMode.DRIVING
+        };
+
+        directionsService.route( request, function( response, status ) {
+
+            if ( status === 'OK' ) {
+                var point = response.routes[ 0 ].legs[ 0 ];
+                $( '#travel_data' ).html( 'Estimated travel time: ' + point.duration.text + ' (' + point.distance.text + ')' );
+            }
+        } );
+                var url = 'http://maps.googleapis.com/maps/api/distancematrix/json?origins='+latp+','+lonp+'&destinations='+lat+','+lon+'&sensor=false&mode=driving';
         console.log(url);
 //      getJSONP(url, function(data){
 //    console.log(data);
