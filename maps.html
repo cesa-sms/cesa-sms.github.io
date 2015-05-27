@@ -192,7 +192,7 @@ function showPosition(position) {
             if ( status === 'OK' ) {
                 var point = response.routes[ 0 ].legs[ 0 ];
                 
-                distance=point.direction.text;
+                distance=point.distance.text;
                 duration=point.duration.text;
                 $( '#travel_data' ).html( 'Estimated travel time: ' + point.duration.text + ' (' + point.distance.text + ')' );
             }
