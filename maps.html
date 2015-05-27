@@ -68,7 +68,7 @@
                                         <br>
                                         <p id="amb"></p>
                                       
-                                        <button type="button" onclick="WebSocketTest()" value="Try it" class="btn btn-danger btn-lg">HELP!!!</button>
+                                        <button type="button" onclick="WebSocketTest()" value="Try it" class="btn btn-danger btn-lg">eyELP!!!</button>
                                         
 <!--                                        <a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#basicModal">Click to open Modal</a>-->
                                 </center>
@@ -183,9 +183,9 @@ function showPosition(position) {
         
         var url = 'http://maps.googleapis.com/maps/api/distancematrix/json?origins='+latp+','+lonp+'&destinations='+lat+','+lon+'&sensor=false&mode=driving';
         console.log(url);
-      getJSONP(url, function(data){
-    console.log(data);
-});  
+//      getJSONP(url, function(data){
+//    console.log(data);
+//});  
     //console.log(makeCorsRequest(url));
        // alert(makeCorsRequest(url));
 //        var obj = JSON.parse(makeCorsRequest(url));
@@ -423,7 +423,8 @@ function makeCorsRequest(url) {
                ws.onopen = function()
                {
                   // Web Socket is connected, send data using send()
-                  ws.send("id: kdflklf");
+                   var xyz = JSON.parse( localStorage.getItem( localStorage.key(0) ) );
+                  ws.send(xyz["objectId"]);
                   alert("Message is sent...");
                };
 				
