@@ -190,6 +190,7 @@ function showPosition(position) {
             if ( status === 'OK' ) {
                 var point = response.routes[ 0 ].legs[ 0 ];
                 $( '#travel_data' ).html( 'Estimated travel time: ' + point.duration.text + ' (' + point.distance.text + ')' );
+                alert(point.duration.text);
             }
         } );
                 var url = 'http://maps.googleapis.com/maps/api/distancematrix/json?origins='+latp+','+lonp+'&destinations='+lat+','+lon+'&sensor=false&mode=driving';
