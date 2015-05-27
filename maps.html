@@ -142,10 +142,10 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    var dist=0;
-    var durt=999999;
-    var distt=0;
-    var durtt=0;
+    var dist=0.0;
+    var durt=999999.0;
+    var distt=0.0;
+    var durtt=0.0;
     var distance='a';
     var duration='a';
     var id='a';
@@ -202,13 +202,14 @@ function showPosition(position) {
                 distt=parseFloat(distance[0]);
                 duration=point.duration.text;
                 duration=duration.split(" ");
-                console.log("Durt:"+durtt+"  Dist:"+distt);
                 durtt=parseFloat(duration[0]);
+                console.log("Durt:"+durtt+"  Dist:"+distt);
                 if(durt>=durtt)
                 {
                     durt=durtt;
                     dist=distt;
                     id=object.id;
+                    alert("happening1");
                 }
             }
         } );
