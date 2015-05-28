@@ -516,11 +516,11 @@ function addMedicalDetails()
     
     
      <script type="text/javascript">
-         function setFalse(id)
+         function setFalse(id1)
          {
             var Vehicle= Parse.Object.extend("Vehiclelatlong");
             veh=new Vehicle();
-            veh.id=id;
+            veh.id=id1;
             veh.set("available", false);
             veh.save(null, {
                       success: function(veh) {
@@ -549,7 +549,7 @@ function addMedicalDetails()
                    var perid = JSON.parse( localStorage.getItem( localStorage.key(0) ) );
                    var vehid= localStorage.getItem("vehid");
                   ws.send(perid["username"]+','+perid["objectId"]+','+vehid)
-                   setFalse(vehid)
+                 setFalse(localStorage.getItem("vehid"))
                   alert("Message is sent...");
                };
 				
