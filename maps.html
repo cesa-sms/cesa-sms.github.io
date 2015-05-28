@@ -519,19 +519,20 @@ function addMedicalDetails()
          function setFalse(id)
          {
             var Vehicle= Parse.Object.extend("Vehiclelatlong");
-            veh=Vehicle();
+            veh=new Vehicle();
             veh.id=id;
-            veh.set("available",false);
+            veh.set("available", false);
             veh.save(null, {
-                      success: function(medDet) {
+                      success: function(veh) {
                         // Execute any logic that should take place after the object is saved.
                       },
-                      error: function(medDet, error) {
+                      error: function(veh, error) {
                         // Execute any logic that should take place if the save fails.
                         // error is a Parse.Error with an error code and message.
                         alert('Error: ' + error.message);
                       }
                     });
+             return 0;
              
          }
          function WebSocketTest()
