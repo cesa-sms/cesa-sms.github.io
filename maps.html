@@ -44,8 +44,10 @@
       <ul class="nav navbar-nav navbar-right">
           <li><a id="name"> hey </a></li>
         <li><input type="button" class="navbar-btn btn-info btn-sm" value="Add Details" data-toggle="modal" data-target="#basicModal">&nbsp;</li>
+        <li><input type="button" data-toggle="modal" data-target="#aboutModal" class="navbar-btn btn-info btn-sm"  value="About"></li>
         <li><input type="button" onclick="logout()" class="navbar-btn btn-danger btn-sm"  value="Logout"></li>
       </ul>
+        <br><p>Technologies used: Parse.com, Github, Bootstrap and Google Maps</p>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
@@ -123,6 +125,34 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addMedicalDetails()">Save changes</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="aboutModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Cloud Enabled Smart Ambulance</h4>
+      </div>
+      <div class="modal-body">
+        <h3>Built by</h3>
+          
+          <ul>
+              <li>Mohammed Munir</li>
+              <li>Sanchit Lodha</li>
+              <li>Sankha Karfa</li>
+          </ul>
+          <p>Under Guidance of Dr. Annapurna P Patil</p>
+          <br> From MSRIT , Bangalore 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<!--        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addMedicalDetails()">Save changes</button>-->
 
       </div>
     </div>
