@@ -75,7 +75,7 @@
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="text-center">
-													<a href="" tabindex="5" onclick=" alert('Not Working now');" class="forgot-password">Forgot Password?</a>
+													<a href="" tabindex="5" onclick="forgot()" class="forgot-password">Forgot Password?</a>
 												</div>
 											</div>
 										</div>
@@ -154,7 +154,21 @@
 		});
 			event.preventDefault();
 		}
-		
+		function forgot()
+        {
+            var em=prompt("Please enter your Email", "@gmail.com");
+            Parse.User.requestPasswordReset(em, {
+  success: function() {
+  alert("Password reset request was sent successfully!\n Check mail for further instructions");
+  },
+  error: function(error) {
+    
+    //alert("Error: " + error.code + " " + error.message);
+      alert("Email not registered \n Contact Helpline");
+  }
+});
+        }
+        
 		function login()
 		{
 			
