@@ -155,8 +155,10 @@
 			event.preventDefault();
 		}
 		function forgot()
-        {
+        { 
+            Parse.initialize("6Newz3ChknhFDA0IRvtFVBEV6wkHEJtGjagAKfgY", "mpPOPAdgD2dhoqOuCu6zw3qwipx5wxFL9S0aGNzb");
             var em=prompt("Please enter your Email", "@gmail.com");
+            //alert(em);
             Parse.User.requestPasswordReset(em, {
   success: function() {
   alert("Password reset request was sent successfully!\n Check mail for further instructions");
