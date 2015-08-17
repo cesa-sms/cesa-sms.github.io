@@ -157,10 +157,7 @@
 		});
 			event.preventDefault();
 		}
-		function forgotIn()
-        { 
-            document.getElementById("f").innerHTML='<input type="email" name="email" id="email" tabindex="2" class="form-control" placeholder="Password"><input><div class="row"><div class="col-sm-6 col-sm-offset-3"><input type="submit" name="Submit" id="submit" tabindex="4" onclick="forgot()" class="form-control btn btn-login" value="Log In"></div></div>';
-        }
+		
         function forgot()
         {
             Parse.initialize("6Newz3ChknhFDA0IRvtFVBEV6wkHEJtGjagAKfgY", "mpPOPAdgD2dhoqOuCu6zw3qwipx5wxFL9S0aGNzb");
@@ -174,7 +171,7 @@
   error: function(error) {
     
     //alert("Error: " + error.code + " " + error.message);
-      alert("Email not registered \n Contact Helpline");
+      alert("Email not registered \n Contact cesa.sms@gmail.com");
   }
 });
             document.getElementById("f").innerHTML='';
@@ -223,5 +220,11 @@
 });
 
 	</script>
+    <script>
+    function forgotIn()
+        { 
+            document.getElementById("f").innerHTML='<input type="email" name="email" id="email" tabindex="2" class="form-control" placeholder="Password"><input><div class="row"><div class="col-sm-6 col-sm-offset-3"><input type="submit" name="Submit" id="submit" tabindex="4" onclick="forgot()" class="form-control btn btn-login" value="Log In"></div></div>';
+        }
+    </script>
 </body>
 </html>
