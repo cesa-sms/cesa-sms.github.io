@@ -154,7 +154,8 @@
       <div class="modal-footer">
           <img src="images/logo_wt.png" width="100px"/><br>
           © 2015. All rights reserved. CESA, Inc.<br>Made with ♥ in India.
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button><a href="#" onclick=" $(#ipaddrs).show(); $(#set).show();"><i class="icon-large icon-cog"></i></a>
+          <br><input type="text" id="ipaddrs"  class="form-control" placeholder="IP Address of Web Socket"><button type="button" id="set" class="btn btn-primary" onClick="setIp();" >Set</button>
 <!--        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addMedicalDetails()">Save changes</button>-->
 
       </div>
@@ -163,7 +164,13 @@
 </div>
     
  <script type="text/javascript">
-
+function setIp()
+     {
+        var ip=document.getElementById("ipaddrs").Value;
+         localStorage.setItem("ipaddrs",ip);
+         $(#ipaddrs).hide(); $(#set).hide();
+        alert("Added");
+     }
 var x = document.getElementById("demo");
 function getLocation() {
     if (navigator.geolocation) {
@@ -632,8 +639,17 @@ function addMedicalDetails()
             if ("WebSocket" in window)
             {
                alert("Calling Ambulance");
+                var host='';
                // Let us open a web socket
-               var ws = new WebSocket("ws://localhost:9000");
+                if(!localStorage.getItem("ipaddrs")){
+                    
+                    host="127.0.0.1";
+                }
+                
+                else{
+                host=localStorage.getItem("ipaddrs");}
+                
+               var ws = new WebSocket("ws://"+host+":9000");
 				
                ws.onopen = function()
                {
