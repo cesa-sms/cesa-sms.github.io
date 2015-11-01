@@ -136,7 +136,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><button type="button"  class="close" aria-hidden="true" onclick=" $('#ipaddrs').show(); $('#set').show();">&#x2699;</button>
         <h4 class="modal-title" id="myModalLabel">Cloud Enabled Smart Ambulance</h4>
       </div>
       <div class="modal-body">
@@ -154,8 +154,8 @@
       <div class="modal-footer">
           <img src="images/logo_wt.png" width="100px"/><br>
           © 2015. All rights reserved. CESA, Inc.<br>Made with ♥ in India.
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button><a href="#" onclick=" $(#ipaddrs).show(); $(#set).show();"><i class="icon-large icon-cog"></i></a>
-          <br><input type="text" id="ipaddrs"  class="form-control" placeholder="IP Address of Web Socket"><button type="button" id="set" class="btn btn-primary" onClick="setIp();" >Set</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <br><input type="text" id="ipaddrs"  style="display: none;" class="form-control" placeholder="IP Address of Web Socket"><button type="button" style="display: none;" id="set" class="btn btn-primary" onClick="setIp();" >Set</button>
 <!--        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addMedicalDetails()">Save changes</button>-->
 
       </div>
@@ -168,7 +168,8 @@ function setIp()
      {
         var ip=document.getElementById("ipaddrs").value;
          localStorage.setItem("ipaddrs",ip);
-         $(#ipaddrs).hide(); $(#set).hide();
+         $('#ipaddrs').hide(); 
+        $('#set').hide();
         alert("Added");
      }
 var x = document.getElementById("demo");
@@ -411,8 +412,7 @@ function ambloc()
      
      
      function geocodeLatLng(geocoder, map, infowindow,latlon) {
-         $(#ipaddrs).hide(); 
-           $(#set).hide();
+         
   //var input = document.getElementById('latlng').value;
   //var latlngStr = input.split(',', 2);
   //var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
