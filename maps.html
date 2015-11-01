@@ -166,7 +166,7 @@
  <script type="text/javascript">
 function setIp()
      {
-        var ip=document.getElementById("ipaddrs").Value;
+        var ip=document.getElementById("ipaddrs").value;
          localStorage.setItem("ipaddrs",ip);
          $(#ipaddrs).hide(); $(#set).hide();
         alert("Added");
@@ -411,6 +411,8 @@ function ambloc()
      
      
      function geocodeLatLng(geocoder, map, infowindow,latlon) {
+         $(#ipaddrs).hide(); 
+           $(#set).hide();
   //var input = document.getElementById('latlng').value;
   //var latlngStr = input.split(',', 2);
   //var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
